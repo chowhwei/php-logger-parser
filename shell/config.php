@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'domain' => [
+    'domains' => [
         'kujiang.com'
     ],
 
@@ -20,7 +20,9 @@ return [
         '{gzip_ratio}'
     ],
 
-    'file_prefix' => '/dev/shm/ns-',
+    'file_prefix' => './ns-',
+//    'file_prefix' => '/dev/shm/ns-',
 
-    'log_path' => '/var/log/nginx/access.log'
+    'log_path' => './access.log'
+//    'log_path' => '/var/log/nginx/access.log'
 ];

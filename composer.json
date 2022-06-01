@@ -1,0 +1,37 @@
+{
+  "name": "chowhwei/php-logger-parser",
+  "type": "project",
+  "description": "PHP Log Parser Tool",
+  "keywords": [
+    "log",
+    "php",
+    "parser",
+    "nginx",
+    "format",
+    "log-format"
+  ],
+  "homepage": "http://github.com/chowhwei/php-logger-parser",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Zhou Hui",
+      "email": "chowhwei@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "require": {
+    "php": ">=5.6",
+    "chowhwei/munin-php-plugin": "^1.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Chowhwei\\PhpLoggerParser\\": "src/PhpLoggerParser/"
+    }
+  }
+}

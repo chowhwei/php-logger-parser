@@ -48,6 +48,9 @@ class Collector
             $data[$main_domain]['status'][$status_code] += 1;
 
             $rtk = number_format($request_time, 1);
+            if(floatval($rtk) > 5.0){
+                $rtk = '5.0';
+            }
             if(!isset($data[$main_domain]['request_time'][$rtk])){
                 $data[$main_domain]['request_time'][$rtk] = 0;
             }

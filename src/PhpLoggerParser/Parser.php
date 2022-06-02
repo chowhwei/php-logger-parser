@@ -32,8 +32,8 @@ class Parser
         '{time}' => '\[(?P<time>\d{2}/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/\d{4}:\d{2}:\d{2}:\d{2} (?:-|\+)\d{4})\]',
         '{user}' => '(?P<user>(?:-|[\w-]+))',
         '{url}' => '(?P<url>.+?)',
-        '{referer}' => '(?P<referer>.+?)',
-        '{user_agent}' => '(?P<user_agent>.+?)',
+        '{referer}' => '(?P<referer>.+?|^$|-)',
+        '{user_agent}' => '(?P<user_agent>.+?|^$|-)',
         '{server_name}' => '(?P<server_name>([a-zA-Z0-9]+)([a-z0-9.-]*))',
         '{canonical_server_name}' => '(?P<canonical_server_name>([a-zA-Z0-9]+)([a-z0-9.-]*))',
         '{status}' => '(?P<status>\d{3}|-)',
@@ -43,7 +43,7 @@ class Parser
         '{received_bytes}' => '(?P<received_bytes>[0-9]+)',
         '{time_serve_request}' => '(?P<time_serve_request>[0-9]+)',
         '{http_x_forwarded_for}' => '(?P<http_x_forwarded_for>.+?)',
-        '{gzip_ratio}' => '(?P<gzip_ratio>(\d+\.?\d*))',
+        '{gzip_ratio}' => '(?P<gzip_ratio>(\d+\.?\d*|-))',
         '{upstream_cache_status}' => '(?P<upstream_cache_status>.+?)'
     ];
 
@@ -81,7 +81,7 @@ class Parser
     public function parse($line)
     {
         if (!preg_match($this->pcreFormat, $line, $matches)) {
-            throw new Exception("Error parsing line");
+            throw new Exception("Error parsing line\n$line");
         }
         $entry = new LogEntity();
         foreach (array_filter(array_keys($matches), 'is_string') as $key) {

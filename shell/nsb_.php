@@ -8,4 +8,4 @@ require_once dirname(__FILE__, 2) . '/vendor/autoload.php';
 
 use Chowhwei\PhpLoggerParser\MuninBandwidth;
 
-(new MuninBandwidth(require_once './config.php'))->handle($argc, $argv);
+(new MuninBandwidth(require_once 'config.php'))->handle($argc, $argv);

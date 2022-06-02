@@ -9,10 +9,9 @@ class Collector
         $domains = $config['domains'];
         $fields = $config['fields'];
         $file_prefix = $config['file_prefix'];
-        $log_path = $config['log_path'];
 
         $data = [];
-        (new Worker($log_path, new Parser($fields), function ($entry) use ($domains, $file_prefix, &$data) {
+        (new Worker($config, new Parser($fields), function ($entry) use ($domains, $file_prefix, &$data) {
             $domain = $entry['host'];
             $status_code = $entry['status'];
             $request_time = floatval($entry['request_time']);

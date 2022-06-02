@@ -19,7 +19,7 @@ class MuninRequestTime extends MuninBase
         if (count($data) > 0) {
             ksort($data);
             foreach ($data as $second => $count) {
-                $name = 'time-' . $second;
+                $name = 'time-' . str_replace('.', '_', $second);
                 $field = (new Field($name))
                     ->setLabel($second)
                     ->setDraw(Graph::FIELD_DRAW_LINE1)

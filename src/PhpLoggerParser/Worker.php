@@ -11,16 +11,18 @@ class Worker
 {
     protected $callable;
     protected $log_file;
+    protected $error;
     protected $parser;
 
     /**
-     * @param $log_file
+     * @param array $config
      * @param Parser $parser
      * @param $callable
      */
-    public function __construct($log_file, $parser, $callable)
+    public function __construct(array $config, $parser, $callable)
     {
-        $this->log_file = $log_file;
+        $this->log_file = $config['log_path'];
+        $this->error = $config['error'];
         $this->callable = $callable;
         $this->parser = $parser;
     }
@@ -32,23 +34,33 @@ class Worker
     {
         $cmd = "tail -F {$this->log_file}";
 
-        $descriptorspec = [
+        $descriptor_spec = [
             0 => ["pipe", "r"],   // stdin is a pipe that the child will read from
             1 => ["pipe", "w"],   // stdout is a pipe that the child will write to
             2 => ["pipe", "w"]    // stderr is a pipe that the child will write to
         ];
-        $process = proc_open($cmd, $descriptorspec, $pipes, realpath('./'), array());
-        try {
-            if (is_resource($process)) {
-                while ($line = fgets($pipes[1])) {
+
+        if(!$fp = fopen($this->error, 'a')){
+            echo "Cannot open file $this->error";
+            exit;
+        }
+
+        $process = proc_open($cmd, $descriptor_spec, $pipes);
+        if (is_resource($process)) {
+            fclose($pipes[0]);
+            while ($line = fgets($pipes[1])) {
+                try {
                     $entry = $this->parser->parse($line);
                     call_user_func($this->callable, $entry);
+                }catch (Exception $ex){
+                    fwrite($fp, $line);
                 }
             }
-        } finally {
-            if (is_resource($process)) {
-                proc_close($process);
-            }
+            fclose($pipes[1]);
+            fclose($pipes[2]);
+            proc_close($process);
         }
+
+        fclose($fp);
     }
 }

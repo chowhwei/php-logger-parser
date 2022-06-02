@@ -23,6 +23,8 @@ return [
     'file_prefix' => './ns-',
 //    'file_prefix' => '/dev/shm/ns-',
 
-    'log_path' => './access.log'
+    'log_path' => './access.log',
 //    'log_path' => '/var/log/nginx/access.log'
+
+    'error' => './error.log'
 ];

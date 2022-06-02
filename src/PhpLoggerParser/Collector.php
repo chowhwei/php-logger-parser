@@ -18,8 +18,6 @@ class Collector
             $request_time = floatval($entry['request_time']);
             $response_bytes = intval($entry['response_bytes']);
 
-            echo $domain, $status_code, "\n";
-
             $parts = explode('.', $domain);
             $parts = array_slice($parts, -2);
             $main_domain = implode('.', $parts);
@@ -50,10 +48,11 @@ class Collector
             }
             $data[$main_domain]['status'][$status_code] += 1;
 
-            if (!isset($data[$main_domain]['request_time'])) {
-                $data[$main_domain]['request_time'] = [];
+            $rtk = number_format($request_time, 1);
+            if(!isset($data[$main_domain]['request_time'][$rtk])){
+                $data[$main_domain]['request_time'][$rtk] = 0;
             }
-            $data[$main_domain]['request_time'][substr($request_time, 0, -2)] += 1;
+            $data[$main_domain]['request_time'][$rtk] += 1;
 
             if (!isset($data[$main_domain]['response_bytes'])) {
                 $data[$main_domain]['response_bytes'] = 0;

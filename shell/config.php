@@ -9,7 +9,7 @@ return [
         '{remote_ip}',
         '{time}',
         '{upstream_cache_status}',
-        '"{request_method} {request} {protocol}"',
+        '"{request}"',  //'"{request_method} {request} {protocol}"',
         '{status}',
         '{response_bytes}',
         '{request_time}',

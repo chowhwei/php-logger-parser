@@ -47,9 +47,14 @@ class Collector
             }
             $data[$main_domain]['status'][$status_code] += 1;
 
-            $rtk = number_format($request_time, 1);
-            if(floatval($rtk) > 5.0){
-                $rtk = '5.0';
+            if($request_time < 0.1) {   //100毫秒内，精确到0.01秒
+                $rtk = number_format($request_time, 2);
+            }else if($request_time < 1){    //1秒内，精确到0.1秒
+                $rtk = number_format($request_time, 1);
+            }else if($request_time < 10){   //10秒内，精确到1秒
+                $rtk = number_format($request_time, 0);
+            }else{  //10秒以上，精确到10秒
+                $rtk = 10 * number_format($request_time / 10, 0);
             }
             if(!isset($data[$main_domain]['request_time'][$rtk])){
                 $data[$main_domain]['request_time'][$rtk] = 0;

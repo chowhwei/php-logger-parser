@@ -1,3 +1,6 @@
+* 2022-06-06
+ 1.0.4 referer/user agent支持 ""，request支持 "-"
+
 * 2022-06-02
  1.0.3 add error log
  1.0.2 refact for easy use

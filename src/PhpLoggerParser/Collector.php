@@ -47,11 +47,11 @@ class Collector
             }
             $data[$main_domain]['status'][$status_code] += 1;
 
-            if($request_time < 0.1) {   //100毫秒内，精确到0.01秒
+            if(number_format($request_time, 2) < 0.1) {   //100毫秒内，精确到0.01秒
                 $rtk = number_format($request_time, 2);
-            }else if($request_time < 1){    //1秒内，精确到0.1秒
+            }else if(number_format($request_time, 1) < 1){    //1秒内，精确到0.1秒
                 $rtk = number_format($request_time, 1);
-            }else if($request_time < 10){   //10秒内，精确到1秒
+            }else if(number_format($request_time, 0) < 10){   //10秒内，精确到1秒
                 $rtk = number_format($request_time, 0);
             }else{  //10秒以上，精确到10秒
                 $rtk = 10 * number_format($request_time / 10, 0);

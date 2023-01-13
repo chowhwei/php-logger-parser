@@ -27,6 +27,7 @@
   "require": {
     "php": ">=7.0",
     "chowhwei/munin-php-plugin": "^1.0",
+    "symfony/console": "^6.2",
     "ext-json": "*"
   },
   "autoload": {
